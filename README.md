@@ -1,6 +1,3 @@
-# STM32F4Core Board – Schematic Analysis Report
----
-
 ## 📑 Table of Contents
 1. [Power](#1-power-전원부)  
 2. [Pin Port](#2-pin-port-핀-포트)  
