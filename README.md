@@ -67,7 +67,6 @@ The design is based on the STM32F407VETx MCU and consists of power, pin headers,
 
 ## 5. MCU (마이크로컨트롤러 유닛)
 ![MCU Schematic](docs/images/MCU.jpg)
-
 - **Model**: STM32F407VETx (ARM Cortex-M4)  
 - **Function**: Central controller handling all peripherals and system logic.  
 - **Connections**:  
