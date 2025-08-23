@@ -28,7 +28,7 @@ The design is based on the STM32F407VETx MCU and consists of power, pin headers,
 ---
 
 ## 2. Pin Port (핀 포트)
-![Pin Port Schematic](docs/images/Pinport.jpg)
+![Pin Port Schematic](docs/images/Pin port.jpg)
 
 - **Function**: Exposes STM32F407VETx GPIOs through external connectors (J3, J4, J5).  
 - **Available Pins**:  
