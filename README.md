@@ -1,8 +1,4 @@
 # STM32F4Core Board – Schematic Analysis Report
-
-This document summarizes the schematic design of the **STM32F4Core board**, extracted from the provided KiCad schematic PDF (`STM32F4Core.pdf`).  
-The design is based on the STM32F407VETx MCU and consists of power, pin headers, USB, crystal oscillators, and MCU core circuitry.  
-
 ---
 
 ## 📑 Table of Contents
