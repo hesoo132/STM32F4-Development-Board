@@ -8,7 +8,7 @@
 
 ---
 
-## 1. Power (전원부)
+## 1. Power
 ![Power Schematic](docs/images/Power.jpg)
 
 - **Function**: Converts external 5V input into a regulated 3.3V supply for the MCU and peripherals.  
@@ -20,7 +20,7 @@
 
 ---
 
-## 2. Pin Port (핀 포트)
+## 2. Pin Port
 ![Pin Port Schematic](docs/images/Pin-Port.jpg)
 
 - **Function**: Exposes STM32F407VETx GPIOs through external connectors (J3, J4, J5).  
@@ -45,7 +45,7 @@
 
 ---
 
-## 4. Crystal (크리스탈 오실레이터)
+## 4. Crystal
 ![Crystal Schematic](docs/images/Crystal.jpg)
 
 - **Function**: Provides accurate clock sources for the MCU.  
@@ -58,7 +58,7 @@
 
 ---
 
-## 5. MCU (마이크로컨트롤러 유닛)
+## 5. MCU
 ![MCU Schematic](docs/images/MCU.jpg)
 - **Model**: STM32F407VETx (ARM Cortex-M4)  
 - **Function**: Central controller handling all peripherals and system logic.  
@@ -75,7 +75,7 @@
 
 ---
 
-## 6. 결론
+## 6. Conclusion
 
 The **STM32F4Core board** is a versatile core board designed around the STM32F407VETx MCU.  
 
