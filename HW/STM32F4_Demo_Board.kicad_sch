@@ -1,0 +1,203 @@
+(kicad_sch
+	(version 20231120)
+	(generator "eeschema")
+	(generator_version "8.0")
+	(uuid "de574595-d888-425f-8363-8694e4e2503f")
+	(paper "A4")
+	(lib_symbols)
+	(sheet
+		(at 166.37 87.63)
+		(size 48.26 39.37)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "26dd8678-b953-4e2c-96cc-190155f52c10")
+		(property "Sheetname" "MCU"
+			(at 166.37 86.9184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "MCU.kicad_sch"
+			(at 166.37 127.5846 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "[Chap 4 STM32F4 Core 보드 설계 최희수]"
+				(path "/de574595-d888-425f-8363-8694e4e2503f"
+					(page "7")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 99.06 43.18)
+		(size 46.99 38.1)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "8fb38b0d-f5b8-49c8-9675-2b846b6b2d2c")
+		(property "Sheetname" "CRYSTAL"
+			(at 99.06 42.4684 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "CRYSTAL.kicad_sch"
+			(at 99.06 81.8646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "[Chap 4 STM32F4 Core 보드 설계 최희수]"
+				(path "/de574595-d888-425f-8363-8694e4e2503f"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 218.44 87.63)
+		(size 46.99 39.37)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "aaee9328-3344-4a8b-8d86-a14b39de57b7")
+		(property "Sheetname" "USB"
+			(at 218.44 86.9184 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "USB.kicad_sch"
+			(at 218.44 127.5846 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "[Chap 4 STM32F4 Core 보드 설계 최희수]"
+				(path "/de574595-d888-425f-8363-8694e4e2503f"
+					(page "6")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 166.37 41.91)
+		(size 48.26 39.37)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "d02e2822-c72f-4482-ae5d-1b6fd901474a")
+		(property "Sheetname" "Power"
+			(at 166.37 41.1984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Power.kicad_sch"
+			(at 166.37 81.8646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "[Chap 4 STM32F4 Core 보드 설계 최희수]"
+				(path "/de574595-d888-425f-8363-8694e4e2503f"
+					(page "2")
+				)
+			)
+		)
+	)
+	(sheet
+		(at 217.17 41.91)
+		(size 48.26 39.37)
+		(fields_autoplaced yes)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(fill
+			(color 0 0 0 0.0000)
+		)
+		(uuid "e8b922ac-27fe-4072-b46b-beb256e98471")
+		(property "Sheetname" "Pin Port"
+			(at 217.17 41.1984 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left bottom)
+			)
+		)
+		(property "Sheetfile" "Pin Port.kicad_sch"
+			(at 217.17 81.8646 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left top)
+			)
+		)
+		(instances
+			(project "[Chap 4 STM32F4 Core 보드 설계 최희수]"
+				(path "/de574595-d888-425f-8363-8694e4e2503f"
+					(page "4")
+				)
+			)
+		)
+	)
+	(sheet_instances
+		(path "/"
+			(page "1")
+		)
+	)
+)
