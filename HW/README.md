@@ -1,6 +1,6 @@
 ## 📘 STM32F4Core Board Schematic Review (PDF)
 
-> Document: [`STM32F4Core.pdf`](docs/STM32F4Core.pdf) · **6 pages** · KiCad-based STM32F4 core-board schematic  
+> Document: [`STM32F4Core.pdf`](docs/STM32F4-Demo-Board.pdf) · **6 pages** · KiCad-based STM32F4 core-board schematic  
 > Goal: Summarize **module functions** and list **bring-up checkpoints** for quick hardware validation.
 
 ---
