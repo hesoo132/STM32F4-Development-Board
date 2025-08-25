@@ -7,11 +7,6 @@ The code demonstrates **interrupt-based handling, polling-based logic, and perip
 
 ---
 
-## 📊 System Block Diagram
-![System Diagram](../docs/images/system-diagram.png)
-
----
-
 ## ⚙️ Features
 
 ### 1) LED Control
