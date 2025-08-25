@@ -1,66 +1,76 @@
-## 📘 STM32F4Core Board Schematic Review (PDF)
+# STM32F4Core Hardware Design
 
-> Document: [`STM32F4Core.pdf`](STM32F4-Demo-Board.pdf) · **6 pages** · KiCad-based STM32F4 core-board schematic  
-> Goal: Summarize **module functions** and list **bring-up checkpoints** for quick hardware validation.
-
----
-
-### 🔎 Overview
-This note summarizes the **STM32F4Core** schematic built around **STM32F407VETx**.  
-The board regulates **5 V → 3.3 V**, exposes rich **GPIO ports**, supports **USB communication**, provides accurate clocks (**8 MHz / 32.768 kHz**), and offers **JTAG/SWD** for firmware debugging.
+## 🔎 Overview
+The **STM32F4Core Board** is a custom core platform built on the **STM32F407VETx** MCU.  
+It provides stable power regulation, rich GPIO breakouts, USB connectivity, accurate system/RTC clocks, and full JTAG/SWD debug support for embedded development.
 
 ---
 
-### 🧭 Summary
-
-| Module | Key Function | Main Parts/Connectors | Notes |
-|---|---|---|---|
-| **Power** | 5 V to 3.3 V regulation | **AMS1117**, POW_LED_1, SW_Slide_DPDT | Board power on/off & indication |
-| **Pin Ports** | Break-out of MCU GPIOs | J3 / J4 / J5 | PA–PE groups, OSC/RESET lines |
-| **USB** | USB data & power switching | **USB Mini-B (J2)**, **MIC2025-1YM** | D+/D−, protection/matching parts |
-| **CRYSTAL** | System/RTC clocks | 8 MHz, 32.768 kHz crystals | Reset switch (SW2), **20-pin JTAG (J12)** |
-| **MCU** | System control | **STM32F407VETx** | VCAP/bypass caps, **boot jumper (J11)** |
+## 📸 PCB Overview
+| Top View | Bottom View |
+|----------|-------------|
+| ![Top](docs/images/STM32F4-Demo-Board-F.png) | ![Bottom](docs/images/STM32F4-Demo-Board-B.png) |
 
 ---
 
-### 🧩 Module Details
-
-#### 1) Power
-- **Function**: Convert external **5 V** to **3.3 V** with **AMS1117** to feed the MCU and peripherals.  
-- **Composition**: AMS1117, power LED (**POW_LED_1**), **slide switch (SW_Slide_DPDT)** for power control.  
-- **Note**: LED shows power status; switch enables on/off management.
-
-#### 2) Pin Ports
-- **Function**: Export **STM32F407VETx** GPIOs to external headers (**J3/J4/J5**).  
-- **Composition**: **PA, PB, PC, PD, PE** groups, external oscillator pins (**OSC_IN/OUT**, **OSC32_IN/OUT**), **RESET**.  
-- **Note**: Useful for sensors, actuators, or other MCUs.
-
-#### 3) USB
-- **Function**: USB communication via **USB Mini-B (J2)** with **MIC2025-1YM** power switch management.  
-- **Composition**: D+/D− data lines, power switch, protection/matching resistors and capacitors.  
-- **Note**: Current limiting and protection considered for safe PC connection/power sourcing.
-
-#### 4) CRYSTAL (Clocks & Debug)
-- **Function**: Accurate clocks: **8 MHz** (system) and **32.768 kHz** (RTC).  
-- **Composition**: Crystals + load capacitors, **reset switch (SW2)**, **20-pin JTAG (J12)**.  
-- **Note**: Enables robust **JTAG/SWD** firmware debug.
-
-#### 5) MCU
-- **Model**: **STM32F407VETx** (ARM Cortex-M4).  
-- **Function**: Central control and peripheral interface.  
-- **Composition**: **VCAP**/bypass capacitors, **boot-mode jumper (J11)**, power and ground pins.
+## 📑 Design Resources
+- **Schematics**: [STM32F4Core.pdf](STM32F4-Demo-Board.pdf) (6-page schematic for quick view)  
+- **EDA Tool**: KiCad (v7)  
 
 ---
 
-### 🧪 Quick Bring-up Checklist
-- **Power**: 5 V in → stable 3.3 V rail, power LED on.  
-- **Clocks**: 8 MHz / 32.768 kHz crystals soldered/spec-correct → MCU clock configuration verified.  
-- **Reset/Boot**: **SW2** works; **J11** boot jumper (Flash/Bootloader) set as intended.  
-- **USB**: Device enumerates over D+/D−; **MIC2025-1YM** power-switch behavior OK.  
-- **GPIO Ports**: Verify J3/J4/J5 pinout → simple toggle/input tests.  
-- **Debug**: **JTAG/SWD (J12)** connects; flash & debug session stable.
+## 🔧 Key Hardware Notes
+- **MCU**: STM32F407VETx (ARM Cortex-M4, 168 MHz, FPU)  
+- **Power**: 5 V input → AMS1117 regulator → 3.3 V rail, with on/off slide switch & LED indicator  
+- **Clocks**: 8 MHz main crystal + 32.768 kHz RTC crystal  
+- **USB**: USB Mini-B connector with **MIC2025-1YM** power switch  
+- **GPIO**: PA–PE group pins exposed to headers (J3/J4/J5)  
+- **Debug**: 20-pin JTAG header (J12), boot-mode jumper (J11), reset switch (SW2)  
 
 ---
 
-### 🖼️ (Optional) Page/Block Captures
-Recommended path:
+## 🧩 Schematic Highlights
+
+### 1) Power
+![Power](docs/images/Power.jpg)  
+- **Regulator**: AMS1117 (5 V → 3.3 V)  
+- **Indicators**: Power LED (POW_LED_1)  
+- **Switch**: Slide switch (SW_Slide_DPDT) for on/off control  
+
+### 2) Pin Ports
+![Ports](docs/images/Pin-Port.jpg)  
+- **Headers**: J3, J4, J5  
+- **Signals**: MCU GPIO (PA/PB/PC/PD/PE), reset, oscillator pins  
+- **Use**: Sensor/actuator connections, external module interfacing  
+
+### 3) USB
+![USB](docs/images/USB.jpg)  
+- **Connector**: USB Mini-B (J2)  
+- **Protection**: MIC2025-1YM (current-limiting switch)  
+- **Signals**: D+, D−, VBUS routed safely to MCU  
+
+### 4) Clocks & Debug
+![Clocks](docs/images/Crystal.jpg)  
+- **Crystals**: 8 MHz (system), 32.768 kHz (RTC)  
+- **Reset**: Push switch (SW2)  
+- **Debug**: 20-pin JTAG header (J12)  
+
+### 5) MCU
+![MCU](docs/images/MCU.jpg)  
+- **Chip**: STM32F407VETx  
+- **Support**: VCAP capacitors, bypass network, boot-mode jumper (J11)  
+- **Role**: Main controller for application logic & peripherals  
+
+---
+
+## ✅ Progress
+- [x] Schematics completed (6 pages)  
+- [x] PCB prototype fabricated (Rev. A)  
+- [x] Power rails validated (5 V → 3.3 V)  
+- [x] JTAG/SWD debug verified  
+- [ ] USB bring-up test pending  
+- [ ] Full GPIO validation in progress  
+
+---
+
+## 📂 Folder Layout
