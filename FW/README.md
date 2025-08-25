@@ -1,90 +1,117 @@
-## 📑 Table of Contents
-1. [Power](#1-power-전원부)  
-2. [Pin Port](#2-pin-port-핀-포트)  
-3. [USB](#3-usb)  
-4. [Crystal](#4-crystal-크리스탈-오실레이터)  
-5. [MCU](#5-mcu-마이크로컨트롤러-유닛)  
-6. [Conclusion](#6-결론)  
+# 🔧 STM32F4 Development Board Firmware
+
+## 🔎 Overview
+This firmware is designed for the **STM32F407ZET6 Development Board**.  
+It provides examples for GPIO, UART, LCD, Timer, PWM, ADC, DAC, I2C and peripheral control.  
+The code demonstrates **interrupt-based handling, polling-based logic, and peripheral drivers** using STM32 HAL.
 
 ---
 
-## 1. Power
-![Power Schematic](docs/images/Power.jpg)
-
-- **Function**: Converts external 5V input into a regulated 3.3V supply for the MCU and peripherals.  
-- **Components**:  
-  - AMS1117 regulator (J1)  
-  - Power LED (POW_LED_1) with resistor (330Ω)  
-  - Slide switch (SW_Slide_DPDT, SW1) for power control  
-  - Decoupling capacitors (0.1µF, 10µF) for stability  
+## 📊 System Block Diagram
+![System Diagram](../docs/images/system-diagram.png)
 
 ---
 
-## 2. Pin Port
-![Pin Port Schematic](docs/images/Pin-Port.jpg)
+## ⚙️ Features
 
-- **Function**: Exposes STM32F407VETx GPIOs through external connectors (J3, J4, J5).  
-- **Available Pins**:  
-  - GPIO groups: PA, PB, PC, PD, PE  
-  - Clock pins: OSC_IN, OSC_OUT, OSC32_IN, OSC32_OUT  
-  - Reset and Boot pins  
-- **Purpose**: Enables flexible interfacing with sensors, actuators, or other controllers.  
+### 1) LED Control
+- **B1** → Interrupt-based toggle of LD1  
+- **B2** → Polling: Turn ON LEDs  
+- **B3** → Polling: Turn OFF LEDs  
+- **B4** → Interrupt: Sync LD2 with LD1 (using flag `led_turned_on`)  
 
----
-
-## 3. USB
-![USB Schematic](docs/images/USB.jpg)
-
-- **Function**: Provides USB communication via a Mini-B connector (J2).  
-- **Components**:  
-  - MIC2025-1YM USB power switch (U1)  
-  - Data lines: USB_DP, USB_DM  
-  - Protection & series resistors (22Ω)  
-  - Power LED (POW_LED2)  
-- **Notes**: Supports regulated USB 5V input, current limiting, and device connectivity.  
+👉 Implemented via:
+- `HAL_GPIO_EXTI_Callback()` → Handle external interrupts for B1/B4  
+- `while(1)` loop polling with `HAL_GPIO_ReadPin()` for B2/B3  
 
 ---
 
-## 4. Crystal
-![Crystal Schematic](docs/images/Crystal.jpg)
+### 2) UART – LED Control
+- UART1 interrupt receive enabled (`HAL_UART_Receive_IT`)  
+- Case 1: Characters `A–C` turn ON LD1, `D–F` turn OFF LD1  
+- Case 2: Strings `"LED ON"` and `"LED OFF"` toggle LD2  
 
-- **Function**: Provides accurate clock sources for the MCU.  
-- **Components**:  
-  - 8MHz main oscillator (X1) with load capacitors (20pF)  
-  - 32.768kHz RTC crystal (Y1) with 6pF capacitors  
-  - BOOT Mode selector (J10)  
-  - Reset switch (SW2)  
-  - 20-pin JTAG/SWD connector (J12) for debugging  
+👉 Implemented via:
+- `HAL_UART_RxCpltCallback()` with buffer and string comparison (`strncmp`)  
 
 ---
 
-## 5. MCU
-![MCU Schematic](docs/images/MCU.jpg)
-- **Model**: STM32F407VETx (ARM Cortex-M4)  
-- **Function**: Central controller handling all peripherals and system logic.  
-- **Connections**:  
-  - VCAP capacitors (2.2µF each)  
-  - Power pins (3.3V, GND)  
-  - BOOT mode jumper (J11)  
-  - VBAT connections (J19, J20, J21)  
-  - GPIOs (Ports A–E) routed to external headers  
-- **Features**:  
-  - High-performance MCU core for DSP and control  
-  - Rich GPIO set for flexible interfacing  
-  - Supports external oscillators and USB  
+### 3) UART – LCD Display
+- Input characters displayed on **20×4 LCD** via UART interrupt  
+- `"Clear"` command clears LCD and resets cursor row  
+- Auto line feed with row increment  
+- Uses `lcd_Init(4,20), lcd_setCursor(), lcd_string()`  
 
 ---
 
-## 6. Conclusion
+### 4) Timer Control (Reaction Test)
+- LD1 (PG13) starts ON, LD2 (PG14) OFF  
+- LD1 turns OFF randomly after 1–5 sec (using `rand()`)  
+- Then LD2 turns ON randomly after 1–5 sec  
+- LCD shows **“R U Ready…?”** and then reaction speed time  
+- Button PA0 → Stop timer and freeze reaction time  
 
-The **STM32F4Core board** is a versatile core board designed around the STM32F407VETx MCU.  
-
-- **Power Management**: 5V input regulated to 3.3V, with onboard monitoring LEDs and USB power switch.  
-- **Expansion**: GPIO-rich design with external pin headers (J3, J4, J5).  
-- **USB Support**: Integrated Mini-B port with MIC2025-based power management.  
-- **Clock Accuracy**: Dual-crystal design (8MHz + 32.768kHz) ensures reliable MCU timing.  
-- **Debugging**: JTAG/SWD interface available for firmware development.  
-
-This makes the board suitable for **embedded system prototyping, robotics, sensor interfacing, and educational use cases** requiring a stable STM32F4 platform.  
+👉 Implemented via:
+- `HAL_TIM_PeriodElapsedCallback(TIM7)` for random timing  
+- `HAL_GPIO_EXTI_Callback()` for stop/resume with button  
 
 ---
+
+### 5) Timer Control 2 – Dual LED Toggle
+- TIM7 → Toggle LD1 every 1 sec  
+- TIM6 → Toggle LD2 every 2 sec  
+
+👉 Implemented via:
+- Two base timers with independent callbacks in `HAL_TIM_PeriodElapsedCallback()`  
+
+---
+
+### 6) PWM Control
+- **Button 1** → PWM 100Hz  
+- **Button 2** → PWM 400Hz  
+- **Button 3** → Duty cycle 25%  
+- **Button 4** → Duty cycle 75%  
+
+👉 Implemented via:
+- TIM2 PWM configuration, updating `PSC`, `ARR`, `CCR1`  
+- Flags set by EXTI interrupts (B1–B4)  
+
+---
+
+### 7) PWM Applications
+- **SG90 Servo Motor (TIM4_CH2)**  
+- **Buzzer (TIM3_CH1)** → 500Hz–1kHz tone  
+- **DC Motor (TIM2_CH1/CH2)** → Forward/reverse rotation with duty change  
+
+👉 Real-time PWM frequency adjustment via `PSC` or `ARR` update.  
+
+---
+
+### 8) DAC
+- **DAC1 (PA4)** outputs analog voltage (0–3.3V, 12-bit)  
+- Example: Constant 1.6V, triangle wave, sine wave with TIM7 interrupt  
+
+👉 Implemented via:
+- `HAL_DAC_Start()`  
+- `HAL_DAC_SetValue()`  
+
+---
+
+### 9) I2C – EEPROM + LCD
+- I2C1 used to read/write external EEPROM (0xA0)  
+- Write 10 bytes → Read back & display on LCD  
+- Must use `I2C_MEMADD_SIZE_16BIT` for addressing  
+
+👉 Implemented via:
+- `HAL_I2C_Mem_Write()` and `HAL_I2C_Mem_Read()`  
+- Display results with `lcd_setCurStr()`  
+
+---
+
+## ✅ Build & Flash
+- **IDE**: STM32CubeIDE  
+- **Toolchain**: ARM-GCC with HAL drivers  
+- **Programmer**: ST-LINK V2/V3  
+- **Example Flash Command**:
+```bash
+st-flash write build/firmware.bin 0x8000000
