@@ -100,13 +100,3 @@ The code demonstrates **interrupt-based handling, polling-based logic, and perip
 👉 Implemented via:
 - `HAL_I2C_Mem_Write()` and `HAL_I2C_Mem_Read()`  
 - Display results with `lcd_setCurStr()`  
-
----
-
-## ✅ Build & Flash
-- **IDE**: STM32CubeIDE  
-- **Toolchain**: ARM-GCC with HAL drivers  
-- **Programmer**: ST-LINK V2/V3  
-- **Example Flash Command**:
-```bash
-st-flash write build/firmware.bin 0x8000000
