@@ -46,8 +46,10 @@ It provides stable power regulation, rich GPIO breakouts, USB connectivity, accu
 ### 3) USB
 ![USB](docs/images/USB.jpg)  
 - **Connector**: USB Mini-B (J2)  
-- **Protection**: MIC2025-1YM (current-limiting switch)  
-- **Signals**: D+, D−, VBUS routed safely to MCU  
+- **Power Switch**: MIC2025-1YM, with EN/FLG signals to MCU  
+- **Signals**: Provides regulated **USB_5V** rail (with current-limit & flag)  
+- **Note**: **Power-only design** — no D+/D− data lines connected to MCU.  
+  Functions solely as **5 V input & protection circuit**, not USB communication.
 
 ### 4) Clocks & Debug
 ![Clocks](docs/images/Crystal.jpg)  
